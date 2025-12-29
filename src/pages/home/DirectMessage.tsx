@@ -72,6 +72,7 @@ const DirectMessage = () => {
         resolver: zodResolver(messageSchema),
         defaultValues: { message: '' },
     })
+    const REAL_TIME_URL = import.meta.env.VITE_REALTIME_URL
 
     useEffect(() => {
         getOtherDirectMessageUser()
@@ -111,7 +112,7 @@ const DirectMessage = () => {
 
     useEffect(() => {
         const connectionBuild = new signalR.HubConnectionBuilder()
-            .withUrl('https://localhost:7008/chatHub')
+            .withUrl(`${REAL_TIME_URL}/chatHub`)
             .withAutomaticReconnect()
             .build()
 
