@@ -25,7 +25,7 @@ const createServerSchema = z.object({
 })
 
 const CreateServer = () => {
-    const { token } = useContext(AuthenticationContext)
+    const { user, token } = useContext(AuthenticationContext)
     const [isCreateServerDialogOpen, setIsCreateServerDialogOpen] =
         useState<boolean>(false)
     const navigate = useNavigate()
@@ -37,15 +37,21 @@ const CreateServer = () => {
     })
 
     const onFormSubmit = async (data: z.infer<typeof createServerSchema>) => {
-        const server = { id: '', name: data.serverName }
+        const server = {
+            id: '',
+            name: data.serverName,
+            serverOwnerId: user?.id,
+        }
         console.log(server)
         try {
             const results = await api.post('v1/servers', server, {
                 headers: { Authorization: `Bearer ${token}` },
             })
             console.log(results)
+            form.reset()
             navigate(`/channels/${results.data.id}`)
             setIsCreateServerDialogOpen(false)
+            toast.success('Server created successfully!')
         } catch (error) {
             toast.error('Error creating server')
         }
