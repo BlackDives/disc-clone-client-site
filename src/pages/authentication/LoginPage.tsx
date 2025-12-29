@@ -19,6 +19,7 @@ import {
     FieldLabel,
 } from '@/components/ui/field'
 import { AuthenticationContext } from '@/providers/auth/AuthProvider'
+import { Button } from '@/components/ui/button'
 
 const loginSchema = z.object({
     email: z.email('Not a valid email.'),
@@ -108,6 +109,11 @@ const LoginPage = () => {
                                     )}
                                 />
                             </FieldGroup>
+                            <div>
+                                <div className="mt-2">
+                                    <Button>Login</Button>
+                                </div>
+                            </div>
                         </CardContent>
                     </Card>
                 </form>
