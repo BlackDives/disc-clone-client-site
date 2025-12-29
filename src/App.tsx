@@ -1,32 +1,18 @@
-import { useState, useRef, useEffect, useContext } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import api from './api/AxiosInstance'
 import { Outlet, Link } from 'react-router'
-import { Wifi, PhoneOff, CameraOff, House } from 'lucide-react'
+import { House } from 'lucide-react'
 import { Button } from './components/ui/button'
-import { AvatarImage } from './components/ui/avatar'
 import { AuthenticationContext } from './providers/auth/AuthProvider'
 import CreateServer from './components/server_creation/CreateServer'
 import { Tooltip, TooltipTrigger } from './components/ui/tooltip'
 import { TooltipContent } from '@radix-ui/react-tooltip'
-import { Separator } from './components/ui/separator'
-
-type Server = {
-    id: string
-    serverName: string
-    serverOwnerId: string
-    createdAt: string
-    updatedAt: string
-    channels: Array<Channel>
-}
 
 type ServerPreview = {
     id: string
     name: string
 }
 
-type Channel = {
-    id: string
-}
 function App() {
     const { user, token, logout } = useContext(AuthenticationContext)
     const [servers, setServers] = useState<ServerPreview[]>([])

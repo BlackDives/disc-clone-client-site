@@ -1,10 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import api from '@/api/AxiosInstance'
 import z from 'zod'
 import { Controller, useForm } from 'react-hook-form'
 import { Button } from '@/components/ui/button'
-import Img from '@/assets/temp_assets/Default_pfp.svg.png'
-import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import { Link, Outlet } from 'react-router'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
@@ -16,7 +14,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { toast } from 'sonner'
 import { AuthenticationContext } from '@/providers/auth/AuthProvider'
-import axios, { AxiosError } from 'axios'
+import axios from 'axios'
 
 type FriendshipRequestDTO = {
     requestedName: string
@@ -72,6 +70,7 @@ const Me = () => {
             const result = await api.post('v1/friendships', data, {
                 headers: { Authorization: `Bearer ${token}` },
             })
+            console.log(result)
             toast.success(`Request sent to ${data.requestedName}`)
         } catch (error) {
             if (axios.isAxiosError(error)) {

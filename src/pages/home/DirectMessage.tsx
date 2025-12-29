@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useContext } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import * as signalR from '@microsoft/signalr'
 import z from 'zod'
 import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { TestMessages } from '@/test_stuff/messages'
 import { AuthenticationContext } from '@/providers/auth/AuthProvider'
 import { useParams } from 'react-router'
 import api from '@/api/AxiosInstance'
@@ -65,8 +64,6 @@ const DirectMessage = () => {
     const { token, user } = useContext(AuthenticationContext)
     const [messages, setMessages] = useState<Array<DirectMessage>>([])
     const [otherUser, setOtherUser] = useState<OtherUser | null>(null)
-    const [isMessageOptionsOpen, setIsMessageOptionsOpen] =
-        useState<boolean>(false)
     const [connection, setConnection] = useState<signalR.HubConnection | null>(
         null
     )
@@ -158,6 +155,8 @@ const DirectMessage = () => {
         const todayDate = mm + '/' + dd + '/' + yyyy
         const time = today.getHours() + ':' + today.getMinutes()
 
+        roomName
+
         const newMessage: DirectMessage = {
             id: '1',
             senderId: senderId,
@@ -206,6 +205,8 @@ const DirectMessage = () => {
             })
             console.log('new arry', newArry)
             setMessages(newArry)
+            roomName + ''
+            senderUsername + ''
         }
     }
 

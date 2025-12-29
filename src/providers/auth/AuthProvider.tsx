@@ -4,6 +4,7 @@ import type { UserProfile } from '@/models/user/User'
 import api from '@/api/AxiosInstance'
 // import { RegisterModel } from '@/models/auth/AuthModel'
 import { toast } from 'sonner'
+import axios from 'axios'
 
 type UserContextType = {
     user: UserProfile | null
@@ -33,10 +34,6 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     const [user, setUser] = useState<UserProfile | null>(null)
     const [token, setToken] = useState<string | null>(null)
     const [isReady, setIsReady] = useState<boolean>(false)
-    const [isConfigured, setIsConfigured] = useState<boolean>(false)
-
-    const BASE_URL = import.meta.env.VITE_API_URL
-    const REAL_TIME_URL = import.meta.env.VITE_REALTIME_URL
 
     const navigate = useNavigate()
 
@@ -75,7 +72,6 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
             const results = await api.post('/v1/auth/register', data)
             const newToken = results.data
             const claims = parseJWT(newToken)
-            // const { UserId, email, sub } = parseJWT(newToken)
             const user: UserProfile = {
                 id: claims.UserId,
                 username: claims.sub,
@@ -88,8 +84,15 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
             localStorage.setItem('token', newToken)
             navigate('/channels/me')
         } catch (error) {
-            console.log(error)
-            toast.error(error.response.data)
+            if (axios.isAxiosError(error)) {
+                if (!error.response) {
+                    toast.error('Error registering')
+                } else {
+                    toast.error(error.response.data)
+                }
+            } else {
+                toast.error('Error registering')
+            }
         }
     }
 
@@ -112,8 +115,15 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
             localStorage.setItem('token', newToken)
             navigate('/channels/me')
         } catch (error) {
-            console.log(error)
-            toast.error(error.response.data)
+            if (axios.isAxiosError(error)) {
+                if (!error.response) {
+                    toast.error('Error logging in')
+                } else {
+                    toast.error(error.response.data)
+                }
+            } else {
+                toast.error('Error logging in')
+            }
         }
     }
 

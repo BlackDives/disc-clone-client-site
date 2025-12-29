@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import { useContext, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import api from '@/api/AxiosInstance'
 import * as z from 'zod'
@@ -20,16 +20,12 @@ import { AuthenticationContext } from '@/providers/auth/AuthProvider'
 import { toast } from 'sonner'
 import { useNavigate } from 'react-router'
 
-type CreateServerProps = {
-    triggerButton: React.ClassAttributes<HTMLButtonElement>
-}
-
 const createServerSchema = z.object({
     serverName: z.string().min(5, 'Server name must be atleast 5 characters'),
 })
 
 const CreateServer = () => {
-    const { user, token } = useContext(AuthenticationContext)
+    const { token } = useContext(AuthenticationContext)
     const [isCreateServerDialogOpen, setIsCreateServerDialogOpen] =
         useState<boolean>(false)
     const navigate = useNavigate()
@@ -51,8 +47,7 @@ const CreateServer = () => {
             navigate(`/channels/${results.data.id}`)
             setIsCreateServerDialogOpen(false)
         } catch (error) {
-            console.log(error)
-            toast.error(error)
+            toast.error('Error creating server')
         }
     }
 

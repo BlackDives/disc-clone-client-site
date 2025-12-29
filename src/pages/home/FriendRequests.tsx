@@ -1,9 +1,7 @@
 import api from '@/api/AxiosInstance'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import { AuthenticationContext } from '@/providers/auth/AuthProvider'
-import React, { useContext, useEffect, useState } from 'react'
-import { useParams } from 'react-router'
+import { useContext, useEffect, useState } from 'react'
 
 type FriendshipRequestDTO = {
     requestedName: string
@@ -13,7 +11,6 @@ type FriendshipRequestDTO = {
 
 const FriendRequests = () => {
     const { token, user } = useContext(AuthenticationContext)
-    const params = useParams()
 
     const [friendsRequestsReceived, setFriendRequestsReceived] = useState<
         Array<FriendshipRequestDTO>
@@ -57,6 +54,7 @@ const FriendRequests = () => {
                 friendship,
                 { headers: { Authorization: `Bearer ${token}` } }
             )
+            console.log(results)
             const removedFriendRequest = friendsRequestsReceived.filter(
                 (item) => item.requesterId !== friendship.requesterId
             )
@@ -72,22 +70,23 @@ const FriendRequests = () => {
                 friendship,
                 { headers: { Authorization: `Bearer ${token}` } }
             )
+            console.log(results)
         } catch (error) {
             console.log(error)
         }
     }
-    async function onCancelFriendRequest(friendship: FriendshipRequestDTO) {
-        try {
-            const results = await api.post(
-                `v1/friendships/${user?.id}/cancel-request`,
-                friendship,
-                { headers: { Authorization: `Bearer ${token}` } }
-            )
-            console.log()
-        } catch (error) {
-            console.log(error)
-        }
-    }
+    // async function onCancelFriendRequest(friendship: FriendshipRequestDTO) {
+    //     try {
+    //         const results = await api.post(
+    //             `v1/friendships/${user?.id}/cancel-request`,
+    //             friendship,
+    //             { headers: { Authorization: `Bearer ${token}` } }
+    //         )
+    //         console.log()
+    //     } catch (error) {
+    //         console.log(error)
+    //     }
+    // }
 
     return (
         <div className="h-full w-full">

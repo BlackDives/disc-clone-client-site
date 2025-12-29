@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import api from '@/api/AxiosInstance'
 import { Link, Outlet, useParams, useNavigate } from 'react-router'
-import * as signalR from '@microsoft/signalr'
 import * as z from 'zod'
 import { useForm, Controller } from 'react-hook-form'
 import {
@@ -30,7 +29,6 @@ import {
     SelectValue,
 } from '@/components/ui/select'
 import { Button } from '@/components/ui/button'
-import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import {
     Collapsible,
     CollapsibleContent,
@@ -54,10 +52,8 @@ import {
     FieldLabel,
 } from '@/components/ui/field'
 import { AuthenticationContext } from '@/providers/auth/AuthProvider'
-import DeleteServer from './DeleteServer'
 import DeleteChannelDialog from './DeleteChannelDialog'
 import { toast } from 'sonner'
-import ServerChannel from './ServerChannel'
 
 type Channel = {
     id: string
@@ -95,7 +91,7 @@ const ServerLayout = () => {
     const [isDeleteChannelDialogOpen, setIsDeleteChannelDialogOpen] =
         useState<boolean>(false)
     const [channels, setChannels] = useState<Array<Channel>>([])
-    const [serverId, setServerId] = useState(params.serverId)
+    const [serverId] = useState(params.serverId)
     const [serverOwnerId, setServerOwnerId] = useState<string>('')
     const [serverName, setServerName] = useState<string>('')
     const [isDeleteServerDialogOpen, setIsDeleteServerDialogOpen] =
@@ -141,11 +137,7 @@ const ServerLayout = () => {
                 headers: { Authorization: `Bearer ${token}` },
             }
         )
-        console.log(results.data)
         setChannels(results.data)
-        const textChannels = channels.filter(
-            (channel) => channel.type === 'Text'
-        )
     }
 
     async function getServerName(id: string) {
@@ -195,6 +187,7 @@ const ServerLayout = () => {
                 data,
                 { headers: { Authorization: `Bearer ${token}` } }
             )
+            console.log(results)
         } catch (error) {
             console.log(error)
         }

@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -9,14 +8,12 @@ import {
     CardAction,
     CardContent,
     CardDescription,
-    CardFooter,
     CardHeader,
     CardTitle,
 } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Link, useNavigate } from 'react-router'
+import { Link } from 'react-router'
 import {
     Field,
     FieldError,
@@ -66,7 +63,7 @@ const SignupPage = () => {
 
     return (
         <div className="w-screen h-screen flex flex-col items-center justify-center">
-            <div className="flex flex col mb-4">
+            <div className="flex col mb-4">
                 <p className="text-6xl">Disclone</p>
             </div>
             <div className="flex flex-col w-[50%]">
@@ -181,6 +178,7 @@ const SignupPage = () => {
                                         <Field>
                                             <FieldLabel>Password</FieldLabel>
                                             <Input
+                                                type="password"
                                                 {...field}
                                                 aria-invalid={
                                                     fieldState.invalid
@@ -205,6 +203,7 @@ const SignupPage = () => {
                                                 Confirm Password
                                             </FieldLabel>
                                             <Input
+                                                type="password"
                                                 {...field}
                                                 aria-invalid={
                                                     fieldState.invalid

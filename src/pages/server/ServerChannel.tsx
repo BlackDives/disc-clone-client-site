@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import * as signalR from '@microsoft/signalr'
 import * as z from 'zod'
 import api from '@/api/AxiosInstance'
@@ -6,24 +6,16 @@ import { useForm, Controller } from 'react-hook-form'
 import { EllipsisVertical, Hash } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { ChannelMessages } from '@/test_stuff/messages'
 import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import { AuthenticationContext } from '@/providers/auth/AuthProvider'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Field, FieldGroup } from '@/components/ui/field'
-import { Dialog } from '@radix-ui/react-dialog'
 import {
     DropdownMenu,
     DropdownMenuContent,
-    DropdownMenuGroup,
     DropdownMenuItem,
     DropdownMenuLabel,
-    DropdownMenuPortal,
     DropdownMenuSeparator,
-    DropdownMenuShortcut,
-    DropdownMenuSub,
-    DropdownMenuSubContent,
-    DropdownMenuSubTrigger,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { useParams } from 'react-router'
@@ -66,13 +58,6 @@ type ChannelInfo = {
     id: string
     name: string
     type: string
-}
-
-type ReceiveGroupMessageParams = {
-    senderUsername: string
-    senderId: string
-    message: string
-    roomName: string
 }
 
 const ServerChannel = () => {
@@ -172,6 +157,7 @@ const ServerChannel = () => {
 
         const todayDate = mm + '/' + dd + '/' + yyyy
         const time = today.getHours() + ':' + today.getMinutes()
+        roomName += 'yo'
 
         const newMessage: Message = {
             id: '1',
@@ -329,10 +315,6 @@ const ServerChannel = () => {
         }
     }
 
-    function pingConnection() {
-        console.log(connection?.state)
-    }
-
     return (
         <div className="h-full w-full ">
             <div className="h-[7%] border-b border-zinc-600 flex flex-row items-center justify-between px-4">
@@ -408,9 +390,6 @@ const ServerChannel = () => {
                                 onMessageSend
                             )}
                         >
-                            {/* <Button className="bg-transparent border-0 h-full w-[3%] text-xl">
-                                +
-                            </Button> */}
                             <FieldGroup>
                                 <Controller
                                     name="message"
@@ -418,7 +397,7 @@ const ServerChannel = () => {
                                     render={({ field, fieldState }) => (
                                         <Field className="h-full">
                                             <Input
-                                                className="border-0 h-full w-[100%] focus-visible:ring-0 text-white text-xl h-[50px]"
+                                                className="border-0 h-full w-[100%] focus-visible:ring-0 text-white text-xl"
                                                 {...field}
                                                 aria-invalid={
                                                     fieldState.invalid

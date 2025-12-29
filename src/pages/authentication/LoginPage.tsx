@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useContext } from 'react'
-import { Link, useNavigate } from 'react-router'
-import { useForm, type SubmitHandler, Controller } from 'react-hook-form'
+import { useContext } from 'react'
+import { Link } from 'react-router'
+import { useForm, Controller } from 'react-hook-form'
 import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
@@ -8,20 +8,16 @@ import {
     CardAction,
     CardContent,
     CardDescription,
-    CardFooter,
     CardHeader,
     CardTitle,
 } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
 import {
     Field,
     FieldError,
     FieldGroup,
     FieldLabel,
 } from '@/components/ui/field'
-import { Spinner } from '@/components/ui/spinner'
 import { AuthenticationContext } from '@/providers/auth/AuthProvider'
 
 const loginSchema = z.object({
@@ -34,7 +30,6 @@ const loginSchema = z.object({
 
 const LoginPage = () => {
     const { login } = useContext(AuthenticationContext)
-    const [loading, setLoading] = useState(false)
     const form = useForm<z.infer<typeof loginSchema>>({
         resolver: zodResolver(loginSchema),
         defaultValues: {
@@ -50,7 +45,7 @@ const LoginPage = () => {
 
     return (
         <div className="w-screen h-screen flex flex-col items-center justify-center">
-            <div className="flex flex col mb-4">
+            <div className="flex col mb-4">
                 <p className="text-6xl">Disclone</p>
             </div>
             <div className="flex flex-col w-[50%]">
@@ -114,17 +109,6 @@ const LoginPage = () => {
                                 />
                             </FieldGroup>
                         </CardContent>
-                        <CardFooter>
-                            <Field>
-                                {loading ? (
-                                    <Button disabled>
-                                        <Spinner /> Login
-                                    </Button>
-                                ) : (
-                                    <Button type="submit">Login</Button>
-                                )}
-                            </Field>
-                        </CardFooter>
                     </Card>
                 </form>
             </div>
