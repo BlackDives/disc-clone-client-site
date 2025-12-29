@@ -50,7 +50,10 @@ const LoginPage = () => {
                 <p className="text-6xl">Disclone</p>
             </div>
             <div className="flex flex-col w-[50%]">
-                <form onSubmit={form.handleSubmit(onFormSubmit)}>
+                <form
+                    id="login-form"
+                    onSubmit={form.handleSubmit(onFormSubmit)}
+                >
                     <Card>
                         <CardHeader>
                             <CardTitle>Login</CardTitle>
@@ -111,7 +114,9 @@ const LoginPage = () => {
                             </FieldGroup>
                             <div>
                                 <div className="mt-2">
-                                    <Button>Login</Button>
+                                    <Button type="submit" form="login-form">
+                                        Login
+                                    </Button>
                                 </div>
                             </div>
                         </CardContent>
